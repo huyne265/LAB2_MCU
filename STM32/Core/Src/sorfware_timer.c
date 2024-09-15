@@ -15,7 +15,6 @@ int status =-1;
 void setTimer(int index, int duration){
 	timer_counter[index] = duration / TIMER_TICK;
 	timer_flag[index] = 0;
-	status = -1;
 }
 int isTimerExpired(int index){
 	if(timer_flag[index] == 1){

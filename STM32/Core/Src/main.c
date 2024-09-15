@@ -38,13 +38,13 @@ static void MX_TIM2_Init(void);
 
 
 void clear7SEG(){
-	  HAL_GPIO_WritePin(a_GPIO_Port, GPIO_PIN_0, GPIO_PIN_SET);
-	  HAL_GPIO_WritePin(b_GPIO_Port, GPIO_PIN_1, GPIO_PIN_SET);
-	  HAL_GPIO_WritePin(c_GPIO_Port, GPIO_PIN_2, GPIO_PIN_SET);
-	  HAL_GPIO_WritePin(d_GPIO_Port, GPIO_PIN_3, GPIO_PIN_SET);
-	  HAL_GPIO_WritePin(e_GPIO_Port, GPIO_PIN_4, GPIO_PIN_SET);
-	  HAL_GPIO_WritePin(f_GPIO_Port, GPIO_PIN_5, GPIO_PIN_SET);
-	  HAL_GPIO_WritePin(g_GPIO_Port, GPIO_PIN_6, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(a_GPIO_Port, a_Pin, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(b_GPIO_Port, b_Pin, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(c_GPIO_Port, c_Pin, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(d_GPIO_Port, d_Pin, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(e_GPIO_Port, e_Pin, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(f_GPIO_Port, f_Pin, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(g_GPIO_Port, g_Pin, GPIO_PIN_SET);
 }
 void display7SEG(int num){
     	  switch(num){
@@ -67,13 +67,13 @@ void display7SEG(int num){
     	  		  HAL_GPIO_WritePin(g_GPIO_Port, g_Pin, GPIO_PIN_SET);
     	  		  break;
     	  	  case 2:
-    	  		  HAL_GPIO_WritePin(a_GPIO_Port, a_Pin, 0);
-    	  		  HAL_GPIO_WritePin(b_GPIO_Port, b_Pin, 0);
-    	  		  HAL_GPIO_WritePin(c_GPIO_Port, c_Pin, 1);
-    	  		  HAL_GPIO_WritePin(d_GPIO_Port, d_Pin, 0);
-    	  		  HAL_GPIO_WritePin(e_GPIO_Port, e_Pin, 0);
-    	  		  HAL_GPIO_WritePin(f_GPIO_Port, f_Pin, 1);
-    	  		  HAL_GPIO_WritePin(g_GPIO_Port, g_Pin, 0);
+    	  		  HAL_GPIO_WritePin(a_GPIO_Port, a_Pin, GPIO_PIN_RESET);
+    	  		  HAL_GPIO_WritePin(b_GPIO_Port, b_Pin, GPIO_PIN_RESET);
+    	  		  HAL_GPIO_WritePin(c_GPIO_Port, c_Pin, GPIO_PIN_SET);
+    	  		  HAL_GPIO_WritePin(d_GPIO_Port, d_Pin, GPIO_PIN_RESET);
+    	  		  HAL_GPIO_WritePin(e_GPIO_Port, e_Pin, GPIO_PIN_RESET);
+    	  		  HAL_GPIO_WritePin(f_GPIO_Port, f_Pin, GPIO_PIN_SET);
+    	  		  HAL_GPIO_WritePin(g_GPIO_Port, g_Pin, GPIO_PIN_RESET);
     	  		  break;
     	  	  case 3:
     	  		  HAL_GPIO_WritePin(a_GPIO_Port, GPIO_PIN_0, GPIO_PIN_RESET);
@@ -186,7 +186,7 @@ void initState(){
 	const int MAX_LED = 4;
 	int index_led = 0;
 	int led_buffer[4] = {1,2,3,4};
-	void update7SEG(int index){
+void update7SEG(int index){
 		switch(index){
 			case 0:
 				display7SEG(led_buffer[0]);
@@ -209,7 +209,7 @@ void initState(){
 				writeEn(-1);
 				break;
 		}
-	}
+}
 
 
 /* USER CODE END 0 */
@@ -246,14 +246,19 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  setTimer(0, 500);
-  setTimer(1, 1000);
-  setTimer(2, 1500);
-  setTimer(3, 2000);
+  setTimer(0, 2000); // 7SEG
+  setTimer(1, 500); // RED_LED
+  setTimer(2, 1000); // DOT
   initState();
   while(1){
-	  HAL_Delay(1000);
-	  HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+	  if(timer_flag[1] == 1){
+		setTimer(1, 500);
+		HAL_GPIO_TogglePin(RED_LED_GPIO_Port, RED_LED_Pin);
+	  }
+	  if(timer_flag[2] == 1){
+		setTimer(2, 1000);
+		HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+	  }
   }
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
@@ -382,23 +387,13 @@ static void MX_GPIO_Init(void)
 const int CYCLE = 2000;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	if(index_led >= MAX_LED) index_led = 0;
-	if(timer_flag[3] == 1){
-		update7SEG(index_led++);
-		setTimer(3, CYCLE);
-		HAL_GPIO_TogglePin(RED_LED_GPIO_Port, RED_LED_Pin);
-	}else if(timer_flag[2] == 1){
-		update7SEG(index_led++);
-		setTimer(2, CYCLE);
-		HAL_GPIO_TogglePin(RED_LED_GPIO_Port, RED_LED_Pin);
-	}else if(timer_flag[1]== 1){
-		update7SEG(index_led++);
-		setTimer(1, CYCLE);
-		HAL_GPIO_TogglePin(RED_LED_GPIO_Port, RED_LED_Pin);
-	}else if(timer_flag[0] == 1){
-		update7SEG(index_led++);
-		setTimer(0, CYCLE);
-		HAL_GPIO_TogglePin(RED_LED_GPIO_Port, RED_LED_Pin);
+	if(timer_flag[0] == 1){
+		setTimer(0, 2000);
 	}
+	if(timer_counter[0] == CYCLE/10) update7SEG(index_led++);
+	else if(timer_counter[0] == CYCLE*3/4 /10) update7SEG(index_led++);
+	else if(timer_counter[0] == CYCLE/2 /10) update7SEG(index_led++);
+	else if(timer_counter[0] == CYCLE/4 /10) update7SEG(index_led++);
 	timerRun();
 }
 /* USER CODE END 4 */
