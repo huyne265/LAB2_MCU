@@ -1202,98 +1202,98 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
  80008e0:	4b33      	ldr	r3, [pc, #204]	; (80009b0 <HAL_TIM_PeriodElapsedCallback+0xe8>)
  80008e2:	681b      	ldr	r3, [r3, #0]
  80008e4:	2b01      	cmp	r3, #1
- 80008e6:	d104      	bne.n	80008f2 <HAL_TIM_PeriodElapsedCallback+0x2a>
-		setTimer(0, 2000);
- 80008e8:	f44f 61fa 	mov.w	r1, #2000	; 0x7d0
- 80008ec:	2000      	movs	r0, #0
- 80008ee:	f000 f86b 	bl	80009c8 <setTimer>
+ 80008e6:	d105      	bne.n	80008f4 <HAL_TIM_PeriodElapsedCallback+0x2c>
+		setTimer(0, CYCLE);
+ 80008e8:	f44f 63fa 	mov.w	r3, #2000	; 0x7d0
+ 80008ec:	4619      	mov	r1, r3
+ 80008ee:	2000      	movs	r0, #0
+ 80008f0:	f000 f86a 	bl	80009c8 <setTimer>
 	}
 	if(timer_counter[0] == CYCLE/10) update7SEG(index_led++);
- 80008f2:	4b30      	ldr	r3, [pc, #192]	; (80009b4 <HAL_TIM_PeriodElapsedCallback+0xec>)
- 80008f4:	681a      	ldr	r2, [r3, #0]
- 80008f6:	f44f 63fa 	mov.w	r3, #2000	; 0x7d0
- 80008fa:	492f      	ldr	r1, [pc, #188]	; (80009b8 <HAL_TIM_PeriodElapsedCallback+0xf0>)
- 80008fc:	fb81 0103 	smull	r0, r1, r1, r3
- 8000900:	1089      	asrs	r1, r1, #2
- 8000902:	17db      	asrs	r3, r3, #31
- 8000904:	1acb      	subs	r3, r1, r3
- 8000906:	429a      	cmp	r2, r3
- 8000908:	d108      	bne.n	800091c <HAL_TIM_PeriodElapsedCallback+0x54>
- 800090a:	4b28      	ldr	r3, [pc, #160]	; (80009ac <HAL_TIM_PeriodElapsedCallback+0xe4>)
- 800090c:	681b      	ldr	r3, [r3, #0]
- 800090e:	1c5a      	adds	r2, r3, #1
- 8000910:	4926      	ldr	r1, [pc, #152]	; (80009ac <HAL_TIM_PeriodElapsedCallback+0xe4>)
- 8000912:	600a      	str	r2, [r1, #0]
- 8000914:	4618      	mov	r0, r3
- 8000916:	f7ff fe77 	bl	8000608 <update7SEG>
- 800091a:	e040      	b.n	800099e <HAL_TIM_PeriodElapsedCallback+0xd6>
+ 80008f4:	4b2f      	ldr	r3, [pc, #188]	; (80009b4 <HAL_TIM_PeriodElapsedCallback+0xec>)
+ 80008f6:	681a      	ldr	r2, [r3, #0]
+ 80008f8:	f44f 63fa 	mov.w	r3, #2000	; 0x7d0
+ 80008fc:	492e      	ldr	r1, [pc, #184]	; (80009b8 <HAL_TIM_PeriodElapsedCallback+0xf0>)
+ 80008fe:	fb81 0103 	smull	r0, r1, r1, r3
+ 8000902:	1089      	asrs	r1, r1, #2
+ 8000904:	17db      	asrs	r3, r3, #31
+ 8000906:	1acb      	subs	r3, r1, r3
+ 8000908:	429a      	cmp	r2, r3
+ 800090a:	d108      	bne.n	800091e <HAL_TIM_PeriodElapsedCallback+0x56>
+ 800090c:	4b27      	ldr	r3, [pc, #156]	; (80009ac <HAL_TIM_PeriodElapsedCallback+0xe4>)
+ 800090e:	681b      	ldr	r3, [r3, #0]
+ 8000910:	1c5a      	adds	r2, r3, #1
+ 8000912:	4926      	ldr	r1, [pc, #152]	; (80009ac <HAL_TIM_PeriodElapsedCallback+0xe4>)
+ 8000914:	600a      	str	r2, [r1, #0]
+ 8000916:	4618      	mov	r0, r3
+ 8000918:	f7ff fe76 	bl	8000608 <update7SEG>
+ 800091c:	e040      	b.n	80009a0 <HAL_TIM_PeriodElapsedCallback+0xd8>
 	else if(timer_counter[0] == CYCLE*3/4 /10) update7SEG(index_led++);
- 800091c:	4b25      	ldr	r3, [pc, #148]	; (80009b4 <HAL_TIM_PeriodElapsedCallback+0xec>)
- 800091e:	681a      	ldr	r2, [r3, #0]
- 8000920:	f44f 61fa 	mov.w	r1, #2000	; 0x7d0
- 8000924:	460b      	mov	r3, r1
- 8000926:	005b      	lsls	r3, r3, #1
- 8000928:	440b      	add	r3, r1
- 800092a:	4923      	ldr	r1, [pc, #140]	; (80009b8 <HAL_TIM_PeriodElapsedCallback+0xf0>)
- 800092c:	fb81 0103 	smull	r0, r1, r1, r3
- 8000930:	1109      	asrs	r1, r1, #4
- 8000932:	17db      	asrs	r3, r3, #31
- 8000934:	1acb      	subs	r3, r1, r3
- 8000936:	429a      	cmp	r2, r3
- 8000938:	d108      	bne.n	800094c <HAL_TIM_PeriodElapsedCallback+0x84>
- 800093a:	4b1c      	ldr	r3, [pc, #112]	; (80009ac <HAL_TIM_PeriodElapsedCallback+0xe4>)
- 800093c:	681b      	ldr	r3, [r3, #0]
- 800093e:	1c5a      	adds	r2, r3, #1
- 8000940:	491a      	ldr	r1, [pc, #104]	; (80009ac <HAL_TIM_PeriodElapsedCallback+0xe4>)
- 8000942:	600a      	str	r2, [r1, #0]
- 8000944:	4618      	mov	r0, r3
- 8000946:	f7ff fe5f 	bl	8000608 <update7SEG>
- 800094a:	e028      	b.n	800099e <HAL_TIM_PeriodElapsedCallback+0xd6>
+ 800091e:	4b25      	ldr	r3, [pc, #148]	; (80009b4 <HAL_TIM_PeriodElapsedCallback+0xec>)
+ 8000920:	681a      	ldr	r2, [r3, #0]
+ 8000922:	f44f 61fa 	mov.w	r1, #2000	; 0x7d0
+ 8000926:	460b      	mov	r3, r1
+ 8000928:	005b      	lsls	r3, r3, #1
+ 800092a:	440b      	add	r3, r1
+ 800092c:	4922      	ldr	r1, [pc, #136]	; (80009b8 <HAL_TIM_PeriodElapsedCallback+0xf0>)
+ 800092e:	fb81 0103 	smull	r0, r1, r1, r3
+ 8000932:	1109      	asrs	r1, r1, #4
+ 8000934:	17db      	asrs	r3, r3, #31
+ 8000936:	1acb      	subs	r3, r1, r3
+ 8000938:	429a      	cmp	r2, r3
+ 800093a:	d108      	bne.n	800094e <HAL_TIM_PeriodElapsedCallback+0x86>
+ 800093c:	4b1b      	ldr	r3, [pc, #108]	; (80009ac <HAL_TIM_PeriodElapsedCallback+0xe4>)
+ 800093e:	681b      	ldr	r3, [r3, #0]
+ 8000940:	1c5a      	adds	r2, r3, #1
+ 8000942:	491a      	ldr	r1, [pc, #104]	; (80009ac <HAL_TIM_PeriodElapsedCallback+0xe4>)
+ 8000944:	600a      	str	r2, [r1, #0]
+ 8000946:	4618      	mov	r0, r3
+ 8000948:	f7ff fe5e 	bl	8000608 <update7SEG>
+ 800094c:	e028      	b.n	80009a0 <HAL_TIM_PeriodElapsedCallback+0xd8>
 	else if(timer_counter[0] == CYCLE/2 /10) update7SEG(index_led++);
- 800094c:	4b19      	ldr	r3, [pc, #100]	; (80009b4 <HAL_TIM_PeriodElapsedCallback+0xec>)
- 800094e:	681a      	ldr	r2, [r3, #0]
- 8000950:	f44f 63fa 	mov.w	r3, #2000	; 0x7d0
- 8000954:	4918      	ldr	r1, [pc, #96]	; (80009b8 <HAL_TIM_PeriodElapsedCallback+0xf0>)
- 8000956:	fb81 0103 	smull	r0, r1, r1, r3
- 800095a:	10c9      	asrs	r1, r1, #3
- 800095c:	17db      	asrs	r3, r3, #31
- 800095e:	1acb      	subs	r3, r1, r3
- 8000960:	429a      	cmp	r2, r3
- 8000962:	d108      	bne.n	8000976 <HAL_TIM_PeriodElapsedCallback+0xae>
- 8000964:	4b11      	ldr	r3, [pc, #68]	; (80009ac <HAL_TIM_PeriodElapsedCallback+0xe4>)
- 8000966:	681b      	ldr	r3, [r3, #0]
- 8000968:	1c5a      	adds	r2, r3, #1
- 800096a:	4910      	ldr	r1, [pc, #64]	; (80009ac <HAL_TIM_PeriodElapsedCallback+0xe4>)
- 800096c:	600a      	str	r2, [r1, #0]
- 800096e:	4618      	mov	r0, r3
- 8000970:	f7ff fe4a 	bl	8000608 <update7SEG>
- 8000974:	e013      	b.n	800099e <HAL_TIM_PeriodElapsedCallback+0xd6>
+ 800094e:	4b19      	ldr	r3, [pc, #100]	; (80009b4 <HAL_TIM_PeriodElapsedCallback+0xec>)
+ 8000950:	681a      	ldr	r2, [r3, #0]
+ 8000952:	f44f 63fa 	mov.w	r3, #2000	; 0x7d0
+ 8000956:	4918      	ldr	r1, [pc, #96]	; (80009b8 <HAL_TIM_PeriodElapsedCallback+0xf0>)
+ 8000958:	fb81 0103 	smull	r0, r1, r1, r3
+ 800095c:	10c9      	asrs	r1, r1, #3
+ 800095e:	17db      	asrs	r3, r3, #31
+ 8000960:	1acb      	subs	r3, r1, r3
+ 8000962:	429a      	cmp	r2, r3
+ 8000964:	d108      	bne.n	8000978 <HAL_TIM_PeriodElapsedCallback+0xb0>
+ 8000966:	4b11      	ldr	r3, [pc, #68]	; (80009ac <HAL_TIM_PeriodElapsedCallback+0xe4>)
+ 8000968:	681b      	ldr	r3, [r3, #0]
+ 800096a:	1c5a      	adds	r2, r3, #1
+ 800096c:	490f      	ldr	r1, [pc, #60]	; (80009ac <HAL_TIM_PeriodElapsedCallback+0xe4>)
+ 800096e:	600a      	str	r2, [r1, #0]
+ 8000970:	4618      	mov	r0, r3
+ 8000972:	f7ff fe49 	bl	8000608 <update7SEG>
+ 8000976:	e013      	b.n	80009a0 <HAL_TIM_PeriodElapsedCallback+0xd8>
 	else if(timer_counter[0] == CYCLE/4 /10) update7SEG(index_led++);
- 8000976:	4b0f      	ldr	r3, [pc, #60]	; (80009b4 <HAL_TIM_PeriodElapsedCallback+0xec>)
- 8000978:	681a      	ldr	r2, [r3, #0]
- 800097a:	f44f 63fa 	mov.w	r3, #2000	; 0x7d0
- 800097e:	490e      	ldr	r1, [pc, #56]	; (80009b8 <HAL_TIM_PeriodElapsedCallback+0xf0>)
- 8000980:	fb81 0103 	smull	r0, r1, r1, r3
- 8000984:	1109      	asrs	r1, r1, #4
- 8000986:	17db      	asrs	r3, r3, #31
- 8000988:	1acb      	subs	r3, r1, r3
- 800098a:	429a      	cmp	r2, r3
- 800098c:	d107      	bne.n	800099e <HAL_TIM_PeriodElapsedCallback+0xd6>
- 800098e:	4b07      	ldr	r3, [pc, #28]	; (80009ac <HAL_TIM_PeriodElapsedCallback+0xe4>)
- 8000990:	681b      	ldr	r3, [r3, #0]
- 8000992:	1c5a      	adds	r2, r3, #1
- 8000994:	4905      	ldr	r1, [pc, #20]	; (80009ac <HAL_TIM_PeriodElapsedCallback+0xe4>)
- 8000996:	600a      	str	r2, [r1, #0]
- 8000998:	4618      	mov	r0, r3
- 800099a:	f7ff fe35 	bl	8000608 <update7SEG>
+ 8000978:	4b0e      	ldr	r3, [pc, #56]	; (80009b4 <HAL_TIM_PeriodElapsedCallback+0xec>)
+ 800097a:	681a      	ldr	r2, [r3, #0]
+ 800097c:	f44f 63fa 	mov.w	r3, #2000	; 0x7d0
+ 8000980:	490d      	ldr	r1, [pc, #52]	; (80009b8 <HAL_TIM_PeriodElapsedCallback+0xf0>)
+ 8000982:	fb81 0103 	smull	r0, r1, r1, r3
+ 8000986:	1109      	asrs	r1, r1, #4
+ 8000988:	17db      	asrs	r3, r3, #31
+ 800098a:	1acb      	subs	r3, r1, r3
+ 800098c:	429a      	cmp	r2, r3
+ 800098e:	d107      	bne.n	80009a0 <HAL_TIM_PeriodElapsedCallback+0xd8>
+ 8000990:	4b06      	ldr	r3, [pc, #24]	; (80009ac <HAL_TIM_PeriodElapsedCallback+0xe4>)
+ 8000992:	681b      	ldr	r3, [r3, #0]
+ 8000994:	1c5a      	adds	r2, r3, #1
+ 8000996:	4905      	ldr	r1, [pc, #20]	; (80009ac <HAL_TIM_PeriodElapsedCallback+0xe4>)
+ 8000998:	600a      	str	r2, [r1, #0]
+ 800099a:	4618      	mov	r0, r3
+ 800099c:	f7ff fe34 	bl	8000608 <update7SEG>
 	timerRun();
- 800099e:	f000 f833 	bl	8000a08 <timerRun>
+ 80009a0:	f000 f832 	bl	8000a08 <timerRun>
 }
- 80009a2:	bf00      	nop
- 80009a4:	3708      	adds	r7, #8
- 80009a6:	46bd      	mov	sp, r7
- 80009a8:	bd80      	pop	{r7, pc}
- 80009aa:	bf00      	nop
+ 80009a4:	bf00      	nop
+ 80009a6:	3708      	adds	r7, #8
+ 80009a8:	46bd      	mov	sp, r7
+ 80009aa:	bd80      	pop	{r7, pc}
  80009ac:	20000038 	.word	0x20000038
  80009b0:	200000ac 	.word	0x200000ac
  80009b4:	20000084 	.word	0x20000084

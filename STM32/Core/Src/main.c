@@ -388,7 +388,7 @@ const int CYCLE = 2000;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	if(index_led >= MAX_LED) index_led = 0;
 	if(timer_flag[0] == 1){
-		setTimer(0, 2000);
+		setTimer(0, CYCLE);
 	}
 	if(timer_counter[0] == CYCLE/10) update7SEG(index_led++);
 	else if(timer_counter[0] == CYCLE*3/4 /10) update7SEG(index_led++);
