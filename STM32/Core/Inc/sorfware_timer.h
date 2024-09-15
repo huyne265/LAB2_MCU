@@ -8,12 +8,11 @@
 #ifndef INC_SORFWARE_TIMER_H_
 #define INC_SORFWARE_TIMER_H_
 
-extern int timer1_flag;
-extern int timer2_flag;
-extern int status;
+extern int timer_flag[];
+extern int timer_counter[];
 
-void setTimer1(int duration);
-void setTimer2(int duration);
+void setTimer(int index ,int duration);
+int isTimerExpired(int index);
 void timerRun();
 
 #endif /* INC_SORFWARE_TIMER_H_ */
