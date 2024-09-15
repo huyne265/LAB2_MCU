@@ -185,7 +185,7 @@ void initState(){
 }
 	const int MAX_LED = 4;
 	int index_led = 0;
-	int led_buffer[4];
+	int led_buffer[4] = {2,3,5,9};
 void update7SEG(int index){
 		switch(index){
 			case 0:
@@ -254,17 +254,33 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   const int CYCLE = 1000;
   int hour = 23, minute = 59 , second = 50;
-  setTimer(0, CYCLE/4); // 7SEG
+  //setTimer(0, CYCLE/4); // 7SEG
   setTimer(1, 10); // RED_LED
   setTimer(2, 1000); // DOT
   setTimer(3, 1000); // Clock
+  setTimer(4,250);
+  setTimer(5,500);
+  setTimer(6,750);
+  setTimer(7,1000);
   initState();
   while(1){
-	  if(timer_flag[0] == 1){
-		  setTimer(0, CYCLE/4);
-		  if(index_led >= 4) index_led = 0;
-		  update7SEG(index_led++);
+	  if(timer_flag[4] == 1){
+		  setTimer(4, CYCLE);
+		  update7SEG(0);
 	  }
+	  if(timer_flag[5] == 1){
+		  setTimer(5, CYCLE);
+		  update7SEG(1);
+	  }
+	  if(timer_flag[6] == 1){
+		  setTimer(6, CYCLE);
+		  update7SEG(2);
+	  }
+	  if(timer_flag[7] == 1){
+		  setTimer(7, CYCLE);
+		  update7SEG(3);
+	  }
+
 
 	  if(timer_flag[1] == 1){
 		setTimer(1, 500);
