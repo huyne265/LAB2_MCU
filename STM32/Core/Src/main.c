@@ -253,9 +253,8 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   int hour = 15, minute = 8 , second = 50;
-
   setTimer(0, 1000); // 7SEG
-  setTimer(1, 500); // RED_LED
+  setTimer(1, 10); // RED_LED
   setTimer(2, 1000); // DOT
   setTimer(3, 1000); // Clock
   initState();
