@@ -5,30 +5,31 @@
  *      Author: ADMIN
  */
 #include "sorfware_timer.h"
+#define MAX_COUNTER 10
+#define TIMER_TICK 10
 
-int timer_counter1 = 0;
-int timer1_flag = 0;
-int timer2_flag = 0;
+int timer_counter[MAX_COUNTER];
+int timer_flag[MAX_COUNTER];
 int status =-1;
 
-void setTimer1(int duration){
-	timer_counter1 = duration;
-	status = -1;
+void setTimer(int index, int duration){
+	timer_counter[index] = duration / TIMER_TICK;
+	timer_flag[index] = 0;
+}
+int isTimerExpired(int index){
+	if(timer_flag[index] == 1){
+		timer_flag[index] = 0;
+		return 1;
+	}
+	return 0;
 }
 void timerRun(){
-	if(timer_counter1 > 0 ){
-		timer_counter1--;
-		if(timer_counter1 == 150){
-			status = 1;
-		}
-		if(timer_counter1 == 100){
-			status = 2;
-		}
-		if(timer_counter1 == 50){
-			status = 3;
-		}
-		if(timer_counter1 <= 0){
-			status = 0;
+	for(int i = 0; i < MAX_COUNTER; i++){
+		if(timer_counter[i] > 0){
+			timer_counter[i]--;
+			if(timer_counter[i] <= 0){
+				timer_flag[i] = 1;
+			}
 		}
 	}
 }
