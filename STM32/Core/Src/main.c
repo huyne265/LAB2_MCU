@@ -246,7 +246,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  setTimer(0, 2000); // 7SEG
+  setTimer(0, 1000); // 7SEG
   setTimer(1, 500); // RED_LED
   setTimer(2, 1000); // DOT
   initState();
@@ -384,11 +384,11 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-const int CYCLE = 2000;
+const int CYCLE = 1000;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	if(index_led >= MAX_LED) index_led = 0;
 	if(timer_flag[0] == 1){
-		setTimer(0, 2000);
+		setTimer(0, CYCLE);
 	}
 	if(timer_counter[0] == CYCLE/10) update7SEG(index_led++);
 	else if(timer_counter[0] == CYCLE*3/4 /10) update7SEG(index_led++);
