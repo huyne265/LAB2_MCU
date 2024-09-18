@@ -255,7 +255,7 @@ int main(void)
 
   int hour = 23, minute = 59 , second = 50;
   //setTimer(0, CYCLE/4); // 7SEG
-  setTimer(1, 10); // RED_LED
+  setTimer(1, 500); // RED_LED
   setTimer(2, 1000); // DOT
   setTimer(3, 1000); // Clock
   initState();
