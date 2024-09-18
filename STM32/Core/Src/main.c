@@ -5,7 +5,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include<sorfware_timer.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -181,26 +180,8 @@ int main(void)
   clear7SEG();
   HAL_GPIO_WritePin(En0_GPIO_Port, En0_Pin,1);
   HAL_GPIO_WritePin(En1_GPIO_Port, En1_Pin,1);
-  setTimer1(100);
+  HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, 1);
   while(1){
-	  switch(status){
-	  	  case 1:
-	  		  HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, 1);
-	  		  HAL_GPIO_WritePin(En0_GPIO_Port, En0_Pin, 0);
-	  		  HAL_GPIO_WritePin(En1_GPIO_Port, En1_Pin, 1);
-	  		  display7SEG(1);
-	  		  break;
-	  	  case 2:
-	  		  HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, 0);
-	  		  HAL_GPIO_WritePin(En0_GPIO_Port, En0_Pin, 1);
-	   		  HAL_GPIO_WritePin(En1_GPIO_Port, En1_Pin, 0);
-	   		  setTimer1(100);
-	   		  display7SEG(2);
-	   		  break;
-	  	  default:
-	  		  break;
-	  }
-	  HAL_Delay(10);
   }
     /* USER CODE END WHILE */
 
@@ -324,9 +305,24 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+int counter = 100;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	timerRun();
+	if(counter == 50){
+		display7SEG(1);
+		HAL_GPIO_WritePin(En0_GPIO_Port, En0_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(En1_GPIO_Port, En1_Pin, GPIO_PIN_SET);
+		HAL_GPIO_TogglePin(RED_LED_GPIO_Port, RED_LED_Pin);
+	}
+	else if(counter <= 0){
+		display7SEG(2);
+		HAL_GPIO_WritePin(En0_GPIO_Port, En0_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(En1_GPIO_Port, En1_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_TogglePin(RED_LED_GPIO_Port, RED_LED_Pin);
+	}
+
+	if(counter <= 0){
+		counter = 100;
+	}else counter --;
 }
 /* USER CODE END 4 */
 
