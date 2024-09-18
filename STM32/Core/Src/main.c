@@ -5,7 +5,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include<sorfware_timer.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -185,7 +184,7 @@ void initState(){
 }
 	const int MAX_LED = 4;
 	int index_led = 0;
-	int led_buffer[4] = {1,2,3,4};
+	int led_buffer[4] = {1,5,0,8};
 void update7SEG(int index){
 		switch(index){
 			case 0:
@@ -253,22 +252,11 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   int hour = 15, minute = 8 , second = 50;
-  setTimer(0, 1000); // 7SEG
-  setTimer(1, 10); // RED_LED
-  setTimer(2, 1000); // DOT
+  /*
   setTimer(3, 1000); // Clock
+  */
   initState();
   while(1){
-	  if(timer_flag[1] == 1){
-		setTimer(1, 500);
-		HAL_GPIO_TogglePin(RED_LED_GPIO_Port, RED_LED_Pin);
-	  }
-	  if(timer_flag[2] == 1){
-		setTimer(2, 1000);
-		HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-	  }
-	  if(timer_flag[3] == 1){
-		  setTimer(3, 1000);
 		  second++;
 		  if(second >= 60){
 			  second = 0;
@@ -280,7 +268,7 @@ int main(void)
 		  }
 		  if(hour >= 24) hour = 0;
 		  updateClockBuffer(hour, minute);
-	  }
+	  	  HAL_Delay(1000);
   }
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
@@ -407,16 +395,33 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 const int CYCLE = 1000;
+int counter = CYCLE;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	if(index_led >= MAX_LED) index_led = 0;
-	if(timer_flag[0] == 1){
-		setTimer(0, CYCLE);
+	if(counter <= 0) counter = 1000;
+	else counter -=10;
+
+	if(counter == CYCLE*3/4 ){
+		update7SEG(index_led++);
+		writeEn(0);
+		HAL_GPIO_TogglePin(RED_LED_GPIO_Port, RED_LED_Pin);
+		HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
 	}
-	if(timer_counter[0] == CYCLE/10) update7SEG(index_led++);
-	else if(timer_counter[0] == CYCLE*3/4 /10) update7SEG(index_led++);
-	else if(timer_counter[0] == CYCLE/2 /10) update7SEG(index_led++);
-	else if(timer_counter[0] == CYCLE/4 /10) update7SEG(index_led++);
-	timerRun();
+	else if(counter == CYCLE/2){
+		update7SEG(index_led++);
+		writeEn(1);
+		HAL_GPIO_TogglePin(RED_LED_GPIO_Port, RED_LED_Pin);
+	}
+	else if(counter == CYCLE/4){
+		update7SEG(index_led++);
+		writeEn(2);
+		HAL_GPIO_TogglePin(RED_LED_GPIO_Port, RED_LED_Pin);
+	}
+	else if(counter <= 0){
+		update7SEG(index_led++);
+		writeEn(3);
+		HAL_GPIO_TogglePin(RED_LED_GPIO_Port, RED_LED_Pin);
+	}
 }
 /* USER CODE END 4 */
 
