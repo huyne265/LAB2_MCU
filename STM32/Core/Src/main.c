@@ -263,7 +263,7 @@ int main(void)
   const int CYCLE = 1000;
   int timer_offset[4] = {250, 500, 750 ,1000};
   for(int i = 0; i < 4; i++){
-	  setTimer(i + 4, timer_offset[i]);
+	  setTimer(i + 4, timer_offset[i]); // setTimer for 4 7SEG
   }
 
   while(1){

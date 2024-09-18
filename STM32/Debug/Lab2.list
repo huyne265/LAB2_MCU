@@ -926,7 +926,7 @@ int main(void)
  8000760:	2300      	movs	r3, #0
  8000762:	61bb      	str	r3, [r7, #24]
  8000764:	e00f      	b.n	8000786 <main+0x7e>
-	  setTimer(i + 4, timer_offset[i]);
+	  setTimer(i + 4, timer_offset[i]); // setTimer for 4 7SEG
  8000766:	69bb      	ldr	r3, [r7, #24]
  8000768:	1d1a      	adds	r2, r3, #4
  800076a:	69bb      	ldr	r3, [r7, #24]
