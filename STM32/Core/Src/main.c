@@ -185,7 +185,7 @@ void initState(){
 }
 	const int MAX_LED = 4;
 	int index_led = 0;
-	int led_buffer[4] = {2,3,5,9};
+	int led_buffer[4] = {1,5,0,8};
 void update7SEG(int index){
 		switch(index){
 			case 0:
@@ -252,28 +252,13 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
-  int hour = 23, minute = 59 , second = 50;
-  //setTimer(0, CYCLE/4); // 7SEG
+  int hour = 15, minute = 8 , second = 50;
+  setTimer(0, 1000); // 7SEG
   setTimer(1, 10); // RED_LED
   setTimer(2, 1000); // DOT
   setTimer(3, 1000); // Clock
   initState();
-
-  const int CYCLE = 1000;
-  int timer_offset[4] = {250, 500, 750 ,1000};
-  for(int i = 0; i < 4; i++){
-	  setTimer(i + 4, timer_offset[i]); //setTimer for 4 7SEG
-  }
-
   while(1){
-	  for(int i = 0; i < 4; i++){
-		  if(timer_flag[i + 4] == 1){
-			  setTimer(i + 4, CYCLE);
-			  update7SEG(i);
-		  }
-	  }
-
 	  if(timer_flag[1] == 1){
 		setTimer(1, 500);
 		HAL_GPIO_TogglePin(RED_LED_GPIO_Port, RED_LED_Pin);
@@ -421,7 +406,16 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+const int CYCLE = 1000;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+	if(index_led >= MAX_LED) index_led = 0;
+	if(timer_flag[0] == 1){
+		setTimer(0, CYCLE);
+	}
+	if(timer_counter[0] == CYCLE/10) update7SEG(index_led++);
+	else if(timer_counter[0] == CYCLE*3/4 /10) update7SEG(index_led++);
+	else if(timer_counter[0] == CYCLE/2 /10) update7SEG(index_led++);
+	else if(timer_counter[0] == CYCLE/4 /10) update7SEG(index_led++);
 	timerRun();
 }
 /* USER CODE END 4 */
