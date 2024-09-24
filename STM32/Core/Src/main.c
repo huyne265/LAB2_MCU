@@ -212,10 +212,9 @@ void updateClockBuffer(int hour, int minute){
 }
 
 
-
 const int MAX_LED_MATRIX = 8;
 int index_led_matrix = 0;
-uint8_t matrix_buffer[8] = {0x18, 0x24 , 0x24 , 0x3C , 0x24 , 0x24 , 0x24 , 0x24};
+uint8_t matrix_buffer[8] = {0x18, 0x66 , 0x66 , 0x7E , 0x66 , 0x66 , 0x66 , 0x66};
 
 void displayLEDMatrix( int index, uint8_t col_value ){
 	GPIO_TypeDef* row_ports[] = {ENM0_GPIO_Port, ENM1_GPIO_Port, ENM2_GPIO_Port, ENM3_GPIO_Port, ENM4_GPIO_Port, ENM5_GPIO_Port, ENM6_GPIO_Port, ENM7_GPIO_Port};
@@ -366,6 +365,9 @@ void updateLEDMatrix( int index ) {
 
 	}
 }
+void updateMatrixBuffer(uint8_t matrix, int index){
+	matrix_buffer[index] = matrix/4;
+}
 void initState(){
 	  clear7SEG();
 	  writeEn(-1);
@@ -407,7 +409,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
+  int index = 0;
   int hour = 23, minute = 59 , second = 50;
   //setTimer(0, CYCLE/4); // 7SEG
   setTimer(1, 500); // RED_LED
@@ -422,9 +424,12 @@ int main(void)
   }
 
   setTimer(8, 125); // Matrix
-
+  setTimer(9, 125); // shiftleft
   while(1){
-
+	  if(timer_flag[9] == 1){
+		  setTimer(9, 125);
+		  updateMatrixBuffer(matrix_buffer[index++],index++);
+	  }
 	  if(timer_flag[8] == 1){
 		  setTimer(8, 125);
 		  if(index_led_matrix > 7) index_led_matrix = 0;
