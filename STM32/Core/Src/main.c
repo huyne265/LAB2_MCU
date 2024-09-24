@@ -215,7 +215,7 @@ void updateClockBuffer(int hour, int minute){
 
 const int MAX_LED_MATRIX = 8;
 int index_led_matrix = 0;
-uint8_t matrix_buffer[8] = {0x18, 0x66 , 0x66 , 0x7E , 0x7E , 0x66 , 0x66 , 0x66};
+uint8_t matrix_buffer[8] = {0x18, 0x3C , 0x66 , 0x7E , 0x7E , 0x66 , 0x66 , 0x66};
 
 void displayLEDMatrix( int index, uint8_t col_value ){
 	GPIO_TypeDef* row_ports[] = {ENM0_GPIO_Port, ENM1_GPIO_Port, ENM2_GPIO_Port, ENM3_GPIO_Port, ENM4_GPIO_Port, ENM5_GPIO_Port, ENM6_GPIO_Port, ENM7_GPIO_Port};
